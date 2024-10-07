@@ -77,10 +77,10 @@ export const addReaction = async (req: Request, res: Response) => {
     if (!thought) {
       return res.status(404).json({ message: 'Thought not found' });
     }
-    res.status(200).json(thought);
-    } catch (err) {
-    res.status(400).json({ message: 'Unable to add reaction', error: err });
-    }
+    return res.status(200).json(thought);
+  } catch (err) {
+    return res.status(400).json({ message: 'Unable to add reaction', error: err });
+  }
 };
 
 export const deleteReaction = async (req: Request, res: Response) => {
@@ -93,9 +93,9 @@ export const deleteReaction = async (req: Request, res: Response) => {
         if (!thought) {
         return res.status(404).json({ message: 'Thought not found' });
         }
-        res.status(200).json(thought);
+        return res.status(200).json(thought);
     } catch (err) {
-        res.status(400).json({ message: 'Unable to delete reaction', error: err });
+        return res.status(400).json({ message: 'Unable to delete reaction', error: err });
     }
     };
-    
+
