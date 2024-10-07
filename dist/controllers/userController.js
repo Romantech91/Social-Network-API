@@ -53,3 +53,27 @@ export const deleteUser = async (req, res) => {
         return res.status(400).json({ message: 'Unable to delete user.', error: error });
     }
 };
+export const addFriend = async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.userId, { $addToSet: { friends: req.params.friendId } }, { new: true });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+        return res.status(200).json(user);
+    }
+    catch (error) {
+        return res.status(500).json({ message: 'Unable to add friend.', error: error });
+    }
+};
+export const removeFriend = async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.userId, { $pull: { friends: req.params.friendId } }, { new: true });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+        return res.status(200).json(user);
+    }
+    catch (error) {
+        return res.status(500).json({ message: 'Unable to remove friend.', error: error });
+    }
+};
