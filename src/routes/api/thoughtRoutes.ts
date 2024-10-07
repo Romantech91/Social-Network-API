@@ -3,7 +3,9 @@ import { getAllThoughts,
     getThoughtById,
     createThought,
     updateThought,
-    deleteThought
+    deleteThought,
+    addReaction,
+    deleteReaction
  } from '../../controllers/thoughtController';
 
 const router = Router();
@@ -17,5 +19,9 @@ router.post('/', createThought);
 router.put('/:id', updateThought);
 
 router.delete('/:id', deleteThought);
+
+router.post('/:thoughtId/reactions', addReaction);
+
+router.delete('/:thoughtId/reactions/:reactionId', deleteReaction);
 
 export default router;
