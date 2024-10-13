@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import Thought from "./Thought.js";
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -33,6 +34,18 @@ const UserSchema = new Schema({
 });
 UserSchema.virtual('friendCount').get(function () {
     return this.friends.length;
+});
+UserSchema.pre('findOneAndDelete', async function (next) {
+    try {
+        const user = await this.model.findOne(this.getFilter());
+        if (user) {
+            await Thought.deleteMany({ username: user.username });
+        }
+        next();
+    }
+    catch (err) {
+        next(err);
+    }
 });
 const User = model('User', UserSchema);
 export default User;
